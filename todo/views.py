@@ -21,7 +21,7 @@ def view(request, id):
 def edit(request, id):
     todo = Todo.objects.get(id=id)
     if request.method == 'GET':
-        form = TodoForm(instance = todo)
+        form = TodoForm(instance=todo)
         context = {
             'form': form,
             'id': id
@@ -29,14 +29,15 @@ def edit(request, id):
         return render(request, 'todo/edit.html', context)
     if request.method == 'POST':
         form = TodoForm(request.POST, instance=todo)
-        context = {
+        if form.is_valid():
             form.save()
-        }
-        messages.success(request, 'Tarea actualizada.')
-        context = {
-            'form': form,
-            'id': id
-        }
+            messages.success(request, 'Tarea actualizada.')
+            context = {
+                'form': form,
+                'id': id
+            }
+        else:
+            messages.error(request, 'Error al actualizar')
         return render(request, 'todo/edit.html', context)
 
 def create(request):

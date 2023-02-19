@@ -7,5 +7,5 @@ class TodoForm(ModelForm):
         model = Todo
         exclude = ('date',)
         widgets = {
-            'estimated_end': DateInput(attrs={'type': 'date'}),
+            'estimated_end': DateInput(attrs={'type': 'date', 'format': '%d/%m/%Y'}),
         }
